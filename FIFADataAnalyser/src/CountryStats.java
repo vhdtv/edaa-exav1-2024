@@ -1,4 +1,6 @@
-public class CountryStats {
+import java.util.Comparator;
+
+public class CountryStats implements Comparable<CountryStats> {
     private String country;
     private String confederation;
     private Float population_share;
@@ -58,6 +60,20 @@ public class CountryStats {
     public String toString() {
         return "CountryStats [country=" + country + ", confederation=" + confederation + ", population_share="
                 + population_share + ", tv_audience_share=" + tv_audience_share + ", gdp_weighted_share="
-                + gdp_weighted_share + ", toString()=" + super.toString() + "]";
+                + gdp_weighted_share + "]";
+    }
+
+    @Override
+    public int compareTo(CountryStats other) {
+        return this.country.compareTo(other.country);
+    }
+
+    public static Comparator<CountryStats> compareByTvAudience() {
+        return new Comparator<CountryStats>() {
+            @Override
+            public int compare(CountryStats cs1, CountryStats cs2) {
+                return Float.compare(cs1.tv_audience_share, cs2.tv_audience_share);
+            }
+        };
     }
 }
